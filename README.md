@@ -46,6 +46,9 @@ This is a multi module maven file. please consider that we have the following mo
 * scripts: Auxiliary scripts to help build, deploy and config system
 * rest: For the REST API which contains an authorization and resource server.
 
+For a detailed description of the system design, layering, and data model, see the
+[Architecture Overview](ARCHITECTURE.md).
+
 ### Issues
 
 If you run in any issues with documentation or software, please be kind and report to our
@@ -90,18 +93,13 @@ git clone https://github.com/eclipse-sw360/sw360.git
 cd sw360
 pip install pre-commit
 pre-commit install
-
-### Note on build requirements
-
-Please note that even partial or module-level Maven builds require deploy-related
-properties to be set due to enforced build rules.
-
-At a minimum, the `base.deploy.dir` property must be provided, otherwise the build
-will fail with a Maven Enforcer error.
-
-This applies even when building individual modules (for example, `libraries`).
-
 ```
+
+> **Note on build requirements**: Even partial or module-level Maven builds require
+> deploy-related properties to be set due to enforced build rules. At a minimum, the
+> `base.deploy.dir` property must be provided, otherwise the build will fail with a
+> Maven Enforcer error. This applies even when building individual modules (for
+> example, `libraries`).
 
 **Step 2**: Build the code
 
@@ -114,7 +112,14 @@ mvn package -P deploy \
     -Dbackend.deploy.dir=webapps
 ```
 
-If you want to run the tests, we need start a local couchdb server and Docker is required:
+**Step 3** (optional): Run the tests
+
+To run the tests, a local CouchDB instance is required. Docker is needed:
+
+```bash
+./scripts/startCouchdbForTests.sh
+mvn test
+```
 
 ### License
 
